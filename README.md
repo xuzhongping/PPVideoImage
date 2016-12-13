@@ -6,7 +6,7 @@
 
  ```
  
- #### 效果图:
+ 
  ![Aaron Swartz](https://github.com/JungHsu/PPVideoImage/blob/master/videodemo.gif)
 
 

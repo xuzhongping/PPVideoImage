@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "UIImageView+VideoCache.h"
+#import "PPTableViewCell.h"
 
 @interface ViewController ()<UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -28,12 +29,13 @@ static NSString *ID = @"ID";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"PPTableViewCell" bundle:nil] forCellReuseIdentifier:ID];
     for (NSInteger i = 0; i < 100; i++ ) {
         [self.array addObject:@(i)];
         
     }
-    
     
 }
 
@@ -43,14 +45,10 @@ static NSString *ID = @"ID";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        
-    }
+    PPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+ 
     [cell.imageView pp_setImageWithVideoURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"] placeholderImage:[UIImage imageNamed:@"no_picture"]];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"第 %@ 行",self.array[indexPath.row]];
+
     return cell;
 }
 @end

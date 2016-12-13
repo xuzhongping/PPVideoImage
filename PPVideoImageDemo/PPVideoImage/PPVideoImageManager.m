@@ -79,12 +79,14 @@ static id _instance;
     }
     
     NSBlockOperation *operation = [PPCacheUtil sharedCacheUtil].operations[urlStr];
-    if (operation) {
-        return;
-    }
     
     operation = [NSBlockOperation blockOperationWithBlock:^{
 
+          targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
+            if (targetImage) {
+                complete(targetImage,url,nil);  // 如果图片已存在，请不要再次解析
+            return ;
+            }
             NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
             AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
             AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
@@ -99,6 +101,7 @@ static id _instance;
                 [weakSelf performSelector:@selector(dealImage:) withObject:@{PPBLOCK: complete,PPIMAGE:targetImage, PPURL:url} afterDelay:0.0 inModes:@[NSDefaultRunLoopMode]];
             });
             [[PPCacheUtil sharedCacheUtil].memoryCache setValue:targetImage forKey:urlStr];
+            
             [[PPCacheUtil sharedCacheUtil] writeDiskCache:targetImage url:url];
         }else {
             complete(nil,url,error);

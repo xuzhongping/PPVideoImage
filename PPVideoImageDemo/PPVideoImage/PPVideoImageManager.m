@@ -95,9 +95,13 @@ static id _instance;
     NSBlockOperation *operation = [PPCacheUtil sharedCacheUtil].operations[urlStr];
     
     if (operation.isExecuting) {  // 如果操作正在执行
+        targetImage = [[PPCacheUtil sharedCacheUtil].memoryCache valueForKey:urlStr];
+        if (targetImage) {
+            complete(targetImage,url,nil);  return;
+        }
           targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
         if (targetImage) {
-            complete(targetImage,url,nil);
+            complete(targetImage,url,nil);  return;
           
         }else {                 // 当操作正在执行且图片资源不存在 、 将操作回调加入操作池
             imageCompleteBlock = ^(NSDictionary *operationDic){
@@ -106,9 +110,10 @@ static id _instance;
                     complete(info[PPIMAGE],info[PPURL],nil);
                 }
             };
-            [_operationPool addObject:imageCompleteBlock];
+            [_operationPool addObject:imageCompleteBlock];  return;
+            
         }
-        return;
+       
     }
     
     operation = [NSBlockOperation blockOperationWithBlock:^{

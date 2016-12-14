@@ -23,4 +23,7 @@
 /** write to disk */
 - (void)writeDiskCache:(UIImage *)diskImage url:(NSURL *)url;
 
+/** 删除磁盘的图片缓存 */
+- (void)cleanDiskCacheCompleted:(void(^)(NSError *)) complete;
+
 @end

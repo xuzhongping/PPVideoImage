@@ -38,8 +38,9 @@ static id _instance;
 
 - (instancetype)init{
     if (self = [super init]) {
+        __weak typeof(self) weakSelf = self;
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidReceiveMemoryWarningNotification object:nil queue:[[NSOperationQueue alloc]init] usingBlock:^(NSNotification * _Nonnull note) {
-            [[NSFileManager defaultManager] removeItemAtPath:PPIMAGECACHE error:nil];
+            [weakSelf cleanDiskCacheCompleted:nil];
         }];
     }
     return self;
@@ -98,6 +99,14 @@ static id _instance;
         [output appendFormat:@"%02x", digest[i]];
     
     return output;
+}
+
+- (void)cleanDiskCacheCompleted:(void (^)(NSError *error))complete{
+   __block NSError *error;
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [[NSFileManager defaultManager] removeItemAtPath:PPIMAGECACHE error:&error];
+        complete(error);
+    });
 }
 
 #pragma mark - private

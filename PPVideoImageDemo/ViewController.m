@@ -30,7 +30,6 @@ static NSString *ID = @"ID";
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-
     
     [self.tableView registerNib:[UINib nibWithNibName:@"PPTableViewCell" bundle:nil] forCellReuseIdentifier:ID];
     self.tableView.rowHeight = 60;
@@ -39,6 +38,7 @@ static NSString *ID = @"ID";
         
     }
     
+//   self.navigationController.navigationBar.subviews.firstObject.subviews.firstObject.hidden = YES;
 }
 
 

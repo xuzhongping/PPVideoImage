@@ -74,7 +74,7 @@ static id _instance;
         NSRange range = [url.path rangeOfString:@"."];
         path = [[self md5:[url.path substringToIndex:range.location]] stringByAppendingString:@".png"];
         path = [PPIMAGECACHE stringByAppendingPathComponent:path];
-        NSData *resultData = UIImageJPEGRepresentation(diskImage, 0.1);
+        NSData *resultData = [self zipImage:diskImage];
         [resultData writeToFile:path atomically:YES];
     });
 }
@@ -99,4 +99,28 @@ static id _instance;
     
     return output;
 }
+
+#pragma mark - private
+
+- (NSData *)zipImage:(UIImage *)image{
+    CGSize originalSize = image.size;
+    NSData *data = nil;
+    if (originalSize.width >= 500.0) {
+        data = UIImageJPEGRepresentation(image, 0.2);
+    }else
+    if ( 500.0 > originalSize.width >= 300.0){
+        data = UIImageJPEGRepresentation(image, 0.3);
+    }else
+    if (300.0 > originalSize.width >= 100.0) {
+        data = UIImageJPEGRepresentation(image, 0.4);
+    }else
+    if (100.0 > originalSize.width) {
+        data = UIImageJPEGRepresentation(image, 0.5);
+    }
+    
+    return data;
+}
+
+
+
 @end

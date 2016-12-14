@@ -17,6 +17,12 @@
 
 @implementation PPVideoImageManager
 
+{
+    NSMutableDictionary *_resultImageDict;
+    NSMutableArray      *_operationPool;
+    void(^imageCompleteBlock)(NSMutableDictionary *operationDic);
+}
+
 #pragma mark - 单例
 static id _instance;
 + (id)allocWithZone:(struct _NSZone *)zone
@@ -40,6 +46,14 @@ static id _instance;
 - (id)copyWithZone:(NSZone *)zone
 {
     return _instance;
+}
+
+- (instancetype)init{
+    if (self = [super init]) {
+        _resultImageDict = @{}.mutableCopy;
+        _operationPool   = @[].mutableCopy;
+    }
+    return self;
 }
 
 
@@ -80,13 +94,27 @@ static id _instance;
     
     NSBlockOperation *operation = [PPCacheUtil sharedCacheUtil].operations[urlStr];
     
+    if (operation.isExecuting) {  // 如果操作正在执行
+          targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
+        if (targetImage) {
+            complete(targetImage,url,nil);
+          
+        }else {                 // 当操作正在执行且图片资源不存在 、 将操作回调加入操作池
+            imageCompleteBlock = ^(NSDictionary *operationDic){
+                NSDictionary *info = operationDic[url.path];
+                if (info) {
+                    complete(info[PPIMAGE],info[PPURL],nil);
+                }
+            };
+            [_operationPool addObject:imageCompleteBlock];
+        }
+        return;
+    }
+    
     operation = [NSBlockOperation blockOperationWithBlock:^{
 
-          targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
-            if (targetImage) {
-                complete(targetImage,url,nil);  // 如果图片已存在，请不要再次解析
-            return ;
-            }
+        
+
             NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
             AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
             AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
@@ -106,14 +134,13 @@ static id _instance;
         }else {
             complete(nil,url,error);
         }
-        [[PPCacheUtil sharedCacheUtil].operations removeObjectForKey:urlStr];
+        [[PPCacheUtil sharedCacheUtil].operations removeObjectForKey:url];
     }];
     
     NSOperationQueue *asyncQueue = [[NSOperationQueue alloc]init];
     [asyncQueue addOperation:operation];
     [[PPCacheUtil sharedCacheUtil].operations setValue:operation forKey:urlStr];
     
-
 }
 
 - (void)dealImage:(id)info{
@@ -121,7 +148,14 @@ static id _instance;
           UIImage *image = info[PPIMAGE];
              NSURL * url = info[PPURL];
     block(image,url,nil);
+    [_resultImageDict setValue:info forKey:url.path];
+    for (imageCompleteBlock in _operationPool) {
+        imageCompleteBlock(_resultImageDict);
+    }
+    
 }
+
+
 
 
 @end

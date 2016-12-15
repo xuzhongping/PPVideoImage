@@ -48,9 +48,10 @@ static NSString *ID = @"ID";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-
+    
 
     [cell.imageView pp_setImageWithVideoURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"] placeholderImage:[UIImage imageNamed:@"no_picture"]];
+
 
     return cell;
 }

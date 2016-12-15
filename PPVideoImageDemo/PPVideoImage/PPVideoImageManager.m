@@ -15,11 +15,52 @@
 #define PPURL   @"ppURL"
 #define PPERROR @"ppERROR"
 
+
+@interface PPOperationPool : NSObject
+{
+    @public
+    NSMutableDictionary *_subPoolDic;
+}
+- (void)addOperation:(NSDictionary *)operationObj;
+
+@end
+
+
+@implementation PPOperationPool
+
+
+- (instancetype)init{
+    if (self = [super init]) {
+
+        _subPoolDic = @{}.mutableCopy;
+    }
+    return self;
+}
+
+- (void)addOperation:(NSDictionary *)operationObj{
+    
+    NSString *operationKey = operationObj.allKeys.firstObject;
+    id        operationValue = operationObj.allValues.firstObject;
+    
+    if (![_subPoolDic valueForKey:operationKey]) {
+        NSMutableArray *subPool = @[].mutableCopy;
+        [_subPoolDic setValue:subPool forKey:operationKey];
+    }
+    [_subPoolDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSMutableArray * obj, BOOL * _Nonnull stop) {
+        if ([key isEqualToString:operationKey]) {
+            [obj addObject:operationValue];
+        }
+    }];
+    
+}
+@end
+
 @implementation PPVideoImageManager
 
 {
     NSMutableDictionary *_resultImageDict;
-    NSMutableArray      *_operationPool;
+    PPOperationPool      *_operationPool;
+    
     void(^imageCompleteBlock)(NSMutableDictionary *operationDic);
 }
 
@@ -51,7 +92,7 @@ static id _instance;
 - (instancetype)init{
     if (self = [super init]) {
         _resultImageDict = @{}.mutableCopy;
-        _operationPool   = @[].mutableCopy;
+        _operationPool   = [[PPOperationPool alloc]init];
     }
     return self;
 }
@@ -110,7 +151,7 @@ static id _instance;
                     complete(info[PPIMAGE],info[PPURL],nil);
                 }
             };
-            [_operationPool addObject:imageCompleteBlock];  return;
+            [_operationPool addOperation:@{urlStr:imageCompleteBlock}]; return;
             
         }
        
@@ -131,7 +172,8 @@ static id _instance;
 
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf performSelector:@selector(dealImage:) withObject:@{PPBLOCK: complete,PPIMAGE:targetImage, PPURL:url} afterDelay:0.0 inModes:@[NSDefaultRunLoopMode]];
+                
+                [weakSelf performSelector:@selector(dealImage:) withObject:@{PPBLOCK: complete,PPIMAGE:targetImage, PPURL:url} afterDelay:3.0 inModes:@[NSDefaultRunLoopMode]];
             });
             [[PPCacheUtil sharedCacheUtil].memoryCache setValue:targetImage forKey:urlStr];
             
@@ -154,10 +196,16 @@ static id _instance;
              NSURL * url = info[PPURL];
     block(image,url,nil);
     [_resultImageDict setValue:info forKey:url.path];
-    for (imageCompleteBlock in _operationPool) {
-        imageCompleteBlock(_resultImageDict);
-    }
-    
+
+    [_operationPool->_subPoolDic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSMutableArray * _Nonnull subPool, BOOL * _Nonnull stop) {
+        if ([key isEqualToString:url.path]) {
+            for (imageCompleteBlock in subPool) {
+                imageCompleteBlock(_resultImageDict);
+            }
+            *stop = YES;
+        }
+    }];
+    [_operationPool->_subPoolDic removeObjectForKey:url.path];
 }
 
 

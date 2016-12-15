@@ -117,10 +117,10 @@ static id _instance;
     if (originalSize.width >= 500.0) {
         data = UIImageJPEGRepresentation(image, 0.2);
     }else
-    if ( 500.0 > originalSize.width >= 300.0){
+    if ( 500.0 > originalSize.width && originalSize.width >= 300.0){
         data = UIImageJPEGRepresentation(image, 0.3);
     }else
-    if (300.0 > originalSize.width >= 100.0) {
+    if (300.0 > originalSize.width && originalSize.width >= 100.0) {
         data = UIImageJPEGRepresentation(image, 0.4);
     }else
     if (100.0 > originalSize.width) {

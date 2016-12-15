@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		C005AFDB1E00D6F70075EC29 /* PPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C005AFD91E00D6F70075EC29 /* PPTableViewCell.m */; };
 		C005AFDC1E00D6F70075EC29 /* PPTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C005AFDA1E00D6F70075EC29 /* PPTableViewCell.xib */; };
+		C0B40ECE1E026F0900395777 /* PPCacheUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B40EC91E026F0900395777 /* PPCacheUtil.m */; };
+		C0B40ECF1E026F0900395777 /* PPVideoImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B40ECB1E026F0900395777 /* PPVideoImageManager.m */; };
+		C0B40ED01E026F0900395777 /* UIImageView+VideoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B40ECD1E026F0900395777 /* UIImageView+VideoCache.m */; };
 		ED6610801E001BAC000F7455 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ED66107F1E001BAC000F7455 /* main.m */; };
 		ED6610831E001BAC000F7455 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610821E001BAC000F7455 /* AppDelegate.m */; };
 		ED6610861E001BAC000F7455 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610851E001BAC000F7455 /* ViewController.m */; };
@@ -17,9 +20,6 @@
 		ED66108E1E001BAC000F7455 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED66108C1E001BAC000F7455 /* LaunchScreen.storyboard */; };
 		ED6610991E001BAC000F7455 /* PPVideoImageDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610981E001BAC000F7455 /* PPVideoImageDemoTests.m */; };
 		ED6610A41E001BAC000F7455 /* PPVideoImageDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610A31E001BAC000F7455 /* PPVideoImageDemoUITests.m */; };
-		ED6610B81E001BCA000F7455 /* PPCacheUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610B31E001BCA000F7455 /* PPCacheUtil.m */; };
-		ED6610B91E001BCA000F7455 /* PPVideoImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610B51E001BCA000F7455 /* PPVideoImageManager.m */; };
-		ED6610BA1E001BCA000F7455 /* UIImageView+VideoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6610B71E001BCA000F7455 /* UIImageView+VideoCache.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +43,12 @@
 		C005AFD81E00D6F70075EC29 /* PPTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTableViewCell.h; sourceTree = "<group>"; };
 		C005AFD91E00D6F70075EC29 /* PPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTableViewCell.m; sourceTree = "<group>"; };
 		C005AFDA1E00D6F70075EC29 /* PPTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPTableViewCell.xib; sourceTree = "<group>"; };
+		C0B40EC81E026F0900395777 /* PPCacheUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCacheUtil.h; sourceTree = "<group>"; };
+		C0B40EC91E026F0900395777 /* PPCacheUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCacheUtil.m; sourceTree = "<group>"; };
+		C0B40ECA1E026F0900395777 /* PPVideoImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoImageManager.h; sourceTree = "<group>"; };
+		C0B40ECB1E026F0900395777 /* PPVideoImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoImageManager.m; sourceTree = "<group>"; };
+		C0B40ECC1E026F0900395777 /* UIImageView+VideoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+VideoCache.h"; sourceTree = "<group>"; };
+		C0B40ECD1E026F0900395777 /* UIImageView+VideoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+VideoCache.m"; sourceTree = "<group>"; };
 		ED66107B1E001BAC000F7455 /* PPVideoImageDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPVideoImageDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED66107F1E001BAC000F7455 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ED6610811E001BAC000F7455 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -59,12 +65,6 @@
 		ED66109F1E001BAC000F7455 /* PPVideoImageDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPVideoImageDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED6610A31E001BAC000F7455 /* PPVideoImageDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPVideoImageDemoUITests.m; sourceTree = "<group>"; };
 		ED6610A51E001BAC000F7455 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ED6610B21E001BCA000F7455 /* PPCacheUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCacheUtil.h; sourceTree = "<group>"; };
-		ED6610B31E001BCA000F7455 /* PPCacheUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCacheUtil.m; sourceTree = "<group>"; };
-		ED6610B41E001BCA000F7455 /* PPVideoImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPVideoImageManager.h; sourceTree = "<group>"; };
-		ED6610B51E001BCA000F7455 /* PPVideoImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPVideoImageManager.m; sourceTree = "<group>"; };
-		ED6610B61E001BCA000F7455 /* UIImageView+VideoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+VideoCache.h"; sourceTree = "<group>"; };
-		ED6610B71E001BCA000F7455 /* UIImageView+VideoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+VideoCache.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +92,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C0B40EC71E026F0900395777 /* PPVideoImage */ = {
+			isa = PBXGroup;
+			children = (
+				C0B40EC81E026F0900395777 /* PPCacheUtil.h */,
+				C0B40EC91E026F0900395777 /* PPCacheUtil.m */,
+				C0B40ECA1E026F0900395777 /* PPVideoImageManager.h */,
+				C0B40ECB1E026F0900395777 /* PPVideoImageManager.m */,
+				C0B40ECC1E026F0900395777 /* UIImageView+VideoCache.h */,
+				C0B40ECD1E026F0900395777 /* UIImageView+VideoCache.m */,
+			);
+			path = PPVideoImage;
+			sourceTree = "<group>";
+		};
 		ED6610721E001BAC000F7455 = {
 			isa = PBXGroup;
 			children = (
@@ -115,10 +128,10 @@
 		ED66107D1E001BAC000F7455 /* PPVideoImageDemo */ = {
 			isa = PBXGroup;
 			children = (
+				C0B40EC71E026F0900395777 /* PPVideoImage */,
 				C005AFD81E00D6F70075EC29 /* PPTableViewCell.h */,
 				C005AFD91E00D6F70075EC29 /* PPTableViewCell.m */,
 				C005AFDA1E00D6F70075EC29 /* PPTableViewCell.xib */,
-				ED6610B11E001BCA000F7455 /* PPVideoImage */,
 				ED6610811E001BAC000F7455 /* AppDelegate.h */,
 				ED6610821E001BAC000F7455 /* AppDelegate.m */,
 				ED6610841E001BAC000F7455 /* ViewController.h */,
@@ -156,19 +169,6 @@
 				ED6610A51E001BAC000F7455 /* Info.plist */,
 			);
 			path = PPVideoImageDemoUITests;
-			sourceTree = "<group>";
-		};
-		ED6610B11E001BCA000F7455 /* PPVideoImage */ = {
-			isa = PBXGroup;
-			children = (
-				ED6610B21E001BCA000F7455 /* PPCacheUtil.h */,
-				ED6610B31E001BCA000F7455 /* PPCacheUtil.m */,
-				ED6610B41E001BCA000F7455 /* PPVideoImageManager.h */,
-				ED6610B51E001BCA000F7455 /* PPVideoImageManager.m */,
-				ED6610B61E001BCA000F7455 /* UIImageView+VideoCache.h */,
-				ED6610B71E001BCA000F7455 /* UIImageView+VideoCache.m */,
-			);
-			path = PPVideoImage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,11 +310,11 @@
 			files = (
 				ED6610861E001BAC000F7455 /* ViewController.m in Sources */,
 				C005AFDB1E00D6F70075EC29 /* PPTableViewCell.m in Sources */,
-				ED6610B91E001BCA000F7455 /* PPVideoImageManager.m in Sources */,
+				C0B40ECE1E026F0900395777 /* PPCacheUtil.m in Sources */,
 				ED6610831E001BAC000F7455 /* AppDelegate.m in Sources */,
-				ED6610BA1E001BCA000F7455 /* UIImageView+VideoCache.m in Sources */,
-				ED6610B81E001BCA000F7455 /* PPCacheUtil.m in Sources */,
+				C0B40ED01E026F0900395777 /* UIImageView+VideoCache.m in Sources */,
 				ED6610801E001BAC000F7455 /* main.m in Sources */,
+				C0B40ECF1E026F0900395777 /* PPVideoImageManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

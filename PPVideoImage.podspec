@@ -8,5 +8,5 @@ s.authors = { 'JungHsu' => '1021057927@qq.com' }
 s.source = { :git => "https://github.com/JungHsu/PPVideoImage.git", :tag => "1.0.0"}
 s.requires_arc = true
 s.ios.deployment_target = '8.0'
-s.source_files = "PPVideoImage", "*.{h,m}"
+s.source_files = "PPVideoImageDemo", "*.{h,m}"
 end

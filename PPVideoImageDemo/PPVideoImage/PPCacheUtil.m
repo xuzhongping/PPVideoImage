@@ -38,7 +38,7 @@ static id _instance;
 
 - (instancetype)init{
     if (self = [super init]) {
-        __weak typeof(self) weakSelf = self;
+            __weak typeof(self) weakSelf = self;
         [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidReceiveMemoryWarningNotification object:nil queue:[[NSOperationQueue alloc]init] usingBlock:^(NSNotification * _Nonnull note) {
             [weakSelf cleanDiskCacheCompleted:nil];
         }];
@@ -84,7 +84,7 @@ static id _instance;
     NSRange range = [url.path rangeOfString:@"."];
     path = [[self md5:[url.path substringToIndex:range.location]] stringByAppendingString:@".png"];
     path = [PPIMAGECACHE stringByAppendingPathComponent:path];
-   return [UIImage imageWithContentsOfFile:path];
+    return [UIImage imageWithContentsOfFile:path];
 }
 
 
@@ -102,7 +102,7 @@ static id _instance;
 }
 
 - (void)cleanDiskCacheCompleted:(void (^)(NSError *error))complete{
-   __block NSError *error;
+        __block NSError *error;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [[NSFileManager defaultManager] removeItemAtPath:PPIMAGECACHE error:&error];
         complete(error);

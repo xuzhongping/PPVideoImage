@@ -65,8 +65,6 @@ static id _instance;
 }
 
 - (void)writeDiskCache:(UIImage *)diskImage url:(NSURL *)url{
-    
-    
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (![[NSFileManager defaultManager] fileExistsAtPath:PPIMAGECACHE]) {
             [[NSFileManager defaultManager] createDirectoryAtPath:PPIMAGECACHE withIntermediateDirectories:YES attributes:nil error:nil];
@@ -92,17 +90,14 @@ static id _instance;
     const char *cStr = [input UTF8String];
     unsigned char digest[CC_MD5_DIGEST_LENGTH];
     CC_MD5( cStr, strlen(cStr), digest );
-    
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
-    
     for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
-        [output appendFormat:@"%02x", digest[i]];
-    
+    [output appendFormat:@"%02x", digest[i]];
     return output;
 }
 
 - (void)cleanDiskCacheCompleted:(void (^)(NSError *error))complete{
-        __block NSError *error;
+    __block NSError *error;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [[NSFileManager defaultManager] removeItemAtPath:PPIMAGECACHE error:&error];
         complete(error);

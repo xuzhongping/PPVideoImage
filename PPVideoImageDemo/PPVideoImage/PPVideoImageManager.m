@@ -31,7 +31,6 @@
 
 - (instancetype)init{
     if (self = [super init]) {
-
         _subPoolDic = @{}.mutableCopy;
     }
     return self;
@@ -41,7 +40,6 @@
     
     NSString *operationKey = operationObj.allKeys.firstObject;
     id      operationValue = operationObj.allValues.firstObject;
-    
     if (![_subPoolDic valueForKey:operationKey]) {
         NSMutableArray *subPool = @[].mutableCopy;
         [_subPoolDic setValue:subPool forKey:operationKey];
@@ -60,7 +58,6 @@
 {
     NSMutableDictionary *_resultImageDict;
     PPOperationPool      *_operationPool;
-    
     void(^imageCompleteBlock)(NSMutableDictionary *operationDic);
 }
 
@@ -119,7 +116,6 @@ static id _instance;
     NSString *urlStr = url.path;
     __block UIImage *targetImage;
     targetImage = [PPCacheUtil sharedCacheUtil].memoryCache[urlStr];
-    
     if (targetImage) {
         complete(targetImage,url,nil);
         return;
@@ -127,14 +123,12 @@ static id _instance;
     
     targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
     if (targetImage) {
-        
         complete(targetImage,url,nil);
         [[PPCacheUtil sharedCacheUtil].memoryCache setValue:targetImage forKey:urlStr];
         return;
     }
     
     NSBlockOperation *operation = [PPCacheUtil sharedCacheUtil].operations[urlStr];
-    
     if (operation.isExecuting) {  // 如果操作正在执行
         targetImage = [[PPCacheUtil sharedCacheUtil].memoryCache valueForKey:urlStr];
         if (targetImage) {
@@ -158,8 +152,6 @@ static id _instance;
     }
     
     operation = [NSBlockOperation blockOperationWithBlock:^{
-
-        
             NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
             AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
             AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
@@ -168,7 +160,6 @@ static id _instance;
             NSError *error = nil;
             targetImage = [UIImage imageWithCGImage:[generator copyCGImageAtTime:CMTimeMake(0, 10) actualTime:NULL error:&error]];
         
-
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 

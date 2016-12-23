@@ -14,6 +14,6 @@
  ![Aaron Swartz](https://github.com/JungHsu/PPVideoImage/blob/master/videodemo.gif)
 
 
-> 第一次进入时加载出的图片会有混合图层，以后打开就没有这种情况，如果你有好的解决方案请使劲提lssues或者Pull request
+> 第一次进入时加载出的图片会有混合图层，以后打开就没有这种情况，如果你有好的解决方案请使劲提lssues或者Pull request 
 > 希望能得到大家的反馈和建议 
 > QQ:1021057927

@@ -12,13 +12,15 @@
 
 - (void)pp_setImageWithVideoURL:(NSURL *)url;
 - (void)pp_setImageWithVideoURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
-
+- (void)pp_setImageWithVideoURL:(NSURL *)url placeholderImage:(UIImage *)placeholder cornerRadius:(CGFloat)cornerRadius;
 @end
 
 @interface UIButton (VideoCache)
 - (void)pp_setImageWithVideoURL:(NSURL *)url forState:(UIControlState)state;
 - (void)pp_setImageWithVideoURL:(NSURL *)url forState:(UIControlState)state placeholderImage:(UIImage *)placeholder;
+- (void)pp_setImageWithVideoURL:(NSURL *)url forState:(UIControlState)state placeholderImage:(UIImage *)placeholder cornerRadius:(CGFloat)cornerRadius;
 
 - (void)pp_setBackgroundImageWithVideoURL:(NSURL *)url forState:(UIControlState)state;
 - (void)pp_setBackgroundImageWithVideoURL:(NSURL *)url forState:(UIControlState)state placeholderImage:(UIImage *)placeholder;
+- (void)pp_setBackgroundImageWithVideoURL:(NSURL *)url forState:(UIControlState)state placeholderImage:(UIImage *)placeholder cornerRadius:(CGFloat)cornerRadius;
 @end

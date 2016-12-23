@@ -98,7 +98,10 @@ static id _instance;
 #pragma mark - public
 
 - (void)pp_parseImagForVideoUrl:(NSURL *)url size:(CGSize)size completed:(completedBlock)complete{
-    
+    [self pp_parseImagForVideoUrl:url size:size cornerRadius:0 completed:complete];
+}
+
+- (void)pp_parseImagForVideoUrl:(NSURL *)url size:(CGSize)size cornerRadius:(CGFloat)cornerRadius completed:(completedBlock)complete{
     __weak typeof(self) weakSelf = self;
     if (!url){
         NSError *error = [NSError errorWithDomain:@"url is nil" code:0 userInfo:nil];
@@ -134,10 +137,10 @@ static id _instance;
         if (targetImage) {
             complete(targetImage,url,nil);  return;
         }
-          targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
+        targetImage = [[PPCacheUtil sharedCacheUtil] readDiskImage:url];
         if (targetImage) {
             complete(targetImage,url,nil);  return;
-          
+            
         }else {                 // 当操作正在执行且图片资源不存在 、 将操作回调加入操作池
             imageCompleteBlock = ^(NSDictionary *operationDic){
                 NSDictionary *info = operationDic[url.path];
@@ -148,18 +151,20 @@ static id _instance;
             [_operationPool addOperation:@{urlStr:imageCompleteBlock}]; return;
             
         }
-       
+        
     }
     
     operation = [NSBlockOperation blockOperationWithBlock:^{
-            NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
-            AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
-            AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
-            generator.appliesPreferredTrackTransform = YES;
-            generator.maximumSize = CGSizeMake(size.width, size.height);
-            NSError *error = nil;
-            targetImage = [UIImage imageWithCGImage:[generator copyCGImageAtTime:CMTimeMake(0, 10) actualTime:NULL error:&error]];
-        
+        NSDictionary *opts = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO] forKey:AVURLAssetPreferPreciseDurationAndTimingKey];
+        AVURLAsset *urlAsset = [AVURLAsset URLAssetWithURL:url options:opts];
+        AVAssetImageGenerator *generator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
+        generator.appliesPreferredTrackTransform = YES;
+        generator.maximumSize = CGSizeMake(size.width, size.height);
+        NSError *error = nil;
+        targetImage = [UIImage imageWithCGImage:[generator copyCGImageAtTime:CMTimeMake(0, 10) actualTime:NULL error:&error]];
+        if (cornerRadius) {
+            targetImage = [self disposeCircularImage:targetImage size:size cornerRadius:cornerRadius];
+        }
         if (!error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -177,7 +182,6 @@ static id _instance;
     NSOperationQueue *asyncQueue = [[NSOperationQueue alloc]init];
     [asyncQueue addOperation:operation];
     [[PPCacheUtil sharedCacheUtil].operations setValue:operation forKey:urlStr];
-    
 }
 
 - (void)dealImage:(id)info{
@@ -198,7 +202,18 @@ static id _instance;
     [_operationPool->_subPoolDic removeObjectForKey:url.path];
 }
 
-
-
+#pragma mark - 处理圆角
+- (UIImage *)disposeCircularImage:(UIImage *)image size:(CGSize)size cornerRadius:(CGFloat)cornerRadius{
+    if (!cornerRadius)    return image;
+    CGRect rect = (CGRect){0.f, 0.f, size};
+    UIGraphicsBeginImageContextWithOptions(size, NO, UIScreen.mainScreen.scale);
+    CGContextAddPath(UIGraphicsGetCurrentContext(),
+                     [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius].CGPath);
+    CGContextClip(UIGraphicsGetCurrentContext());
+    [image drawInRect:rect];
+    UIImage *output = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return output;
+}
 
 @end

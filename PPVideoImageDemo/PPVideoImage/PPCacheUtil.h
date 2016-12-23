@@ -18,6 +18,7 @@
 
 @property (nonatomic,strong)NSMutableDictionary *operations;
 
+@property (nonatomic,strong)NSMutableDictionary *placeholders;
 
 - (UIImage *)readDiskImage:(NSURL *)url;
 /** write to disk */

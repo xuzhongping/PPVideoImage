@@ -64,6 +64,13 @@ static id _instance;
     return _operations;
 }
 
+- (NSMutableDictionary *)placeholders{
+    if (!_placeholders) {
+        _placeholders = @{}.mutableCopy;
+    }
+    return _placeholders;
+}
+
 - (void)writeDiskCache:(UIImage *)diskImage url:(NSURL *)url{
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if (![[NSFileManager defaultManager] fileExistsAtPath:PPIMAGECACHE]) {

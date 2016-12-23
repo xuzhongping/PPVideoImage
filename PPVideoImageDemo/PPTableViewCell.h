@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PPTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewOne;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewtwo;
+@property (weak, nonatomic) IBOutlet UIImageView *imageViewThree;
 @end

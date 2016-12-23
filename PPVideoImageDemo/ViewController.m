@@ -32,7 +32,7 @@ static NSString *ID = @"ID";
 
     
     [self.tableView registerNib:[UINib nibWithNibName:@"PPTableViewCell" bundle:nil] forCellReuseIdentifier:ID];
-    self.tableView.rowHeight = 60;
+    self.tableView.rowHeight = 200;
     for (NSInteger i = 0; i < 100; i++ ) {
         [self.array addObject:@(i)];
         
@@ -50,9 +50,11 @@ static NSString *ID = @"ID";
     PPTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     
 
-    [cell.imageView pp_setImageWithVideoURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"] placeholderImage:[UIImage imageNamed:@"no_picture"]];
-
-
+    [cell.imageViewOne pp_setImageWithVideoURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"] placeholderImage:[UIImage imageNamed:@"no_picture"] cornerRadius:80.0];
+    
+   [cell.imageViewtwo pp_setImageWithVideoURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"] placeholderImage:[UIImage imageNamed:@"no_picture"] cornerRadius:80.0];
+    [cell.imageViewThree pp_setImageWithVideoURL:[NSURL URLWithString:@"http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"] placeholderImage:[UIImage imageNamed:@"no_picture"] cornerRadius:80.0];
+    
     return cell;
 }
 @end

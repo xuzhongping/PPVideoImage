@@ -22,7 +22,9 @@
     }
     
     [[PPVideoImageManager sharedManager] pp_parseImagForVideoUrl:url size:self.bounds.size completed:^(UIImage *image, NSURL *url, NSError *error) {
-        if (error || ![image isKindOfClass:[UIImage class]]) return ;
+        if (error || ![image isKindOfClass:[UIImage class]]) { NSAssert(false, @"%@ or image class error",error);
+            return ;
+        };
         self.image = image;
     }];
 
@@ -36,7 +38,9 @@
     }
     
     [[PPVideoImageManager sharedManager] pp_parseImagForVideoUrl:url size:self.bounds.size cornerRadius:cornerRadius completed:^(UIImage *image, NSURL *url, NSError *error) {
-            if (error || ![image isKindOfClass:[UIImage class]]) return ;
+        if (error || ![image isKindOfClass:[UIImage class]]) { NSAssert(false, @"%@ or image class error",error);
+            return ;
+        };
             self.image = image;
     }];
 }
@@ -55,7 +59,9 @@
     }
     
     [[PPVideoImageManager sharedManager] pp_parseImagForVideoUrl:url size:self.imageView.bounds.size completed:^(UIImage *image, NSURL *url, NSError *error) {
-        if (error || ![image isKindOfClass:[UIImage class]]) return ;
+        if (error || ![image isKindOfClass:[UIImage class]]) { NSAssert(false, @"%@ or image class error",error);
+            return ;
+        };
         [self setImage:image forState:state];
     }];
 }
@@ -66,7 +72,9 @@
     }
     
     [[PPVideoImageManager sharedManager] pp_parseImagForVideoUrl:url size:self.bounds.size cornerRadius:cornerRadius completed:^(UIImage *image, NSURL *url, NSError *error) {
-        if (error || ![image isKindOfClass:[UIImage class]]) return ;
+        if (error || ![image isKindOfClass:[UIImage class]]) { NSAssert(false, @"%@ or image class error",error);
+            return ;
+        };;
         [self setImage:image forState:state];
     }];
 }
@@ -81,7 +89,9 @@
         [self setBackgroundImage:placeholder forState:state];
     }
     [[PPVideoImageManager sharedManager] pp_parseImagForVideoUrl:url size:self.imageView.bounds.size completed:^(UIImage *image, NSURL *url, NSError *error) {
-        if (error || ![image isKindOfClass:[UIImage class]]) return ;
+        if (error || ![image isKindOfClass:[UIImage class]]) { NSAssert(false, @"%@ or image class error",error);
+            return ;
+        };
         [self setBackgroundImage:image forState:state];
     }];
 }
@@ -92,7 +102,9 @@
     }
 
     [[PPVideoImageManager sharedManager] pp_parseImagForVideoUrl:url size:self.bounds.size cornerRadius:cornerRadius completed:^(UIImage *image, NSURL *url, NSError *error) {
-        if (error || ![image isKindOfClass:[UIImage class]]) return ;
+        if (error || ![image isKindOfClass:[UIImage class]]) { NSAssert(false, @"%@ or image class error",error);
+            return ;
+        };
         [self setBackgroundImage:image forState:state];
     }];
 }

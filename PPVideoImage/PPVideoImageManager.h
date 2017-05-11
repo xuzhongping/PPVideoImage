@@ -14,7 +14,8 @@ typedef void(^completedBlock)(UIImage *image,NSURL *url,NSError *error);
 
 + (instancetype)sharedManager;
 
-/** 通过一个VideoURL获取第一帧图片 */
 - (void)pp_parseImagForVideoUrl:(NSURL *)url size:(CGSize)size completed:(completedBlock)complete;
+- (void)pp_parseImagForVideoUrl:(NSURL *)url size:(CGSize)size cornerRadius:(CGFloat)cornerRadius completed:(completedBlock)complete;
 
+- (UIImage *)disposeCircularImage:(UIImage *)image size:(CGSize)size cornerRadius:(CGFloat)cornerRadius;
 @end

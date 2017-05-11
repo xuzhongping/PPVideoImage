@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "PPVideoImage"
-  s.version      = "0.0.1"
+  s.version      = "0.1.0"
   s.summary      = "this is PPVideoImage"
 
   s.platform     = :ios, '6.0'
